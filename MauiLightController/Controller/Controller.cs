@@ -6,10 +6,7 @@ namespace Controller
     public class Controller
     {
         string realm = "strijp";
-        string sectret = "TsuunSkVxfmSvkDOXpaBQygcW6Lpn8RN";
-        string client_id = "fontys";
         string url = "https://staging.strijp.openremote.app";
-        Stopwatch Stopwatch;
 
         string broeinestid = "3lGbluNj94x8A7b3NFieiy";
         string O6021 = "3v4kD62VpTAHAmMFW536hQ";
@@ -30,10 +27,27 @@ namespace Controller
         string W6028 = "76oDMkuQEqM90lYy2eskyv";
 
         public string[] lights;
+        public List<Light> Lights { get; set; }
         public Controller()
         {
             lights = new string[] { O6021, O6022, O6023, N6024, N6025, O6026, O6027, O6028 };
-            Stopwatch = new Stopwatch();
+            Lights = new List<Light>();
+            Lights.Add(new Light("3v4kD62VpTAHAmMFW536hQ", "O6021", 5.458841, 51.445833));
+            Lights.Add(new Light("4ErkQXvRN0b1aFS1z5Mi8t", "W6021", 5.458841, 51.445833));
+            Lights.Add(new Light("50WxcFY2bcWYuX9BCJaPdN", "O6022", 5.458841, 51.445833));
+            Lights.Add(new Light("2zxSJTBK2HyCJRTVP25HER", "W6022", 5.458841, 51.445833));
+            Lights.Add(new Light("5WSH1baydm37mEQaVfpRtt", "O6023", 5.458841, 51.445833));
+            Lights.Add(new Light("5QOQbbZbIcMrneDToD7Wgu", "W6023", 5.458841, 51.445833));
+            Lights.Add(new Light("7S324dnACVjlg2TO53C4zj", "N6024", 5.458841, 51.445833));
+            Lights.Add(new Light("3XXJACAqHZCkhgn8PWZKaQ", "Z6024", 5.458841, 51.445833));
+            Lights.Add(new Light("4k8ThtXzLEc50LHowdGYan", "N6025", 5.458841, 51.445833));
+            Lights.Add(new Light("777yWSXa64OdBpQLzWUv5R", "Z6025", 5.458841, 51.445833));
+            Lights.Add(new Light("6e5JpYJ0g17nwS9vLFzgfp", "O6026", 5.458841, 51.445833));
+            Lights.Add(new Light("2mezxE1lOSngRyXubh0wOf", "W6026", 5.458841, 51.445833));
+            Lights.Add(new Light("5kYW7teouE8TFqmWwdsMz0", "O6027", 5.458841, 51.445833));
+            Lights.Add(new Light("5UMschrkm2g3hsmEXuYXbq", "W6027", 5.458841, 51.445833));
+            Lights.Add(new Light("6F1eDFmy5CQW9NFiM7JDSJ", "O6028", 5.458841, 51.445833));
+            Lights.Add(new Light("76oDMkuQEqM90lYy2eskyv", "W6028", 5.458841, 51.445833));
         }
 
         public void FadeAllLights(string[] lights, int[] color)
@@ -87,6 +101,28 @@ namespace Controller
             var request = new RestRequest();
             request.Method = Method.Put;
             request.AddBody(false);
+            request.AddHeader("authorization", "Bearer " + Token.GetToken());
+            Console.WriteLine(client.Execute(request).Content);
+            return;
+        }
+
+        public void SetWarmBrightness(string assetid, int brightness)
+        {
+            var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid + "/attribute/brightnessWhiteWarmLed");
+            var request = new RestRequest();
+            request.Method = Method.Put;
+            request.AddBody(brightness);
+            request.AddHeader("authorization", "Bearer " + Token.GetToken());
+            Console.WriteLine(client.Execute(request).Content);
+            return;
+        }
+
+        public void SetColdBrightness(string assetid, int brightness)
+        {
+            var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid + "/attribute/brightnessWhiteColdLed");
+            var request = new RestRequest();
+            request.Method = Method.Put;
+            request.AddBody(brightness);
             request.AddHeader("authorization", "Bearer " + Token.GetToken());
             Console.WriteLine(client.Execute(request).Content);
             return;

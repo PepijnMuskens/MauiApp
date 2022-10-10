@@ -59,13 +59,8 @@ public partial class ToggleLights : ContentPage
 
             return horizontalStackLayout;
         });
-        List<Light> Lights = new List<Light>();
-        foreach (string id in Controller.lights)
-        {
-            Lights.Add(new Light() { Id = id });
-        }
         StackLayout stackLayout = new StackLayout();
-        BindableLayout.SetItemsSource(stackLayout, Lights);
+        BindableLayout.SetItemsSource(stackLayout, Controller.Lights);
         BindableLayout.SetItemTemplate(stackLayout, dataTemplate);
 
         ScrollView scrollView = new ScrollView
@@ -80,15 +75,14 @@ public partial class ToggleLights : ContentPage
 
     private async void TurnLightOnClicked(object sender, EventArgs e, string assetid)
     {
-        Controller.TurnOn(assetid);
+        Controller.Lights.Find(L => L.Id == assetid).Toggle();
     }
     private async void TurnLightOffClicked(object sender, EventArgs e, string assetid)
     {
-        Controller.TurnOff(assetid);
+        Controller.Lights.Find(L => L.Id == assetid).FadeLight();
     }
     private async void FadeLightClicked(object sender, EventArgs e, string assetid)
     {
-        Random random = new Random();
-        Controller.ChangeColor(assetid, new int[] { random.Next(0, 255), random.Next(0, 255), random.Next(0, 255) });
+        Controller.Lights.Find(L => L.Id == assetid).StopTasks();
     }
 }
