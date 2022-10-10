@@ -65,14 +65,15 @@ namespace Controller
             request.AddBody(color);
             request.AddHeader("authorization", "Bearer " + Token.GetToken());
             client.ExecuteAsync(request);
+            Color = color;
             return;
         }
 
         public void Toggle()
         {
             StopTasks();
-            Thread = new Thread(() => toggle(!OnOff));
             OnOff = !OnOff;
+            Thread = new Thread(() => toggle(OnOff));
             Thread.Start();
         }
         private void toggle(bool onOff)
@@ -84,6 +85,42 @@ namespace Controller
             request.AddHeader("authorization", "Bearer " + Token.GetToken());
             Console.WriteLine(client.Execute(request).Content);
             return;
+        }
+
+        public void SetWarmBrightness(int brightness)
+        {
+            if(brightness < 0) brightness = 0;
+            if(brightness > 255) brightness = 255;
+            WarmBrightness = brightness;
+            Thread = new Thread(() =>
+            {
+                var client = new RestClient(url + "/api/" + realm + "/asset/" + Id + "/attribute/brightnessWhiteWarmLed");
+                var request = new RestRequest();
+                request.Method = Method.Put;
+                request.AddBody(brightness);
+                request.AddHeader("authorization", "Bearer " + Token.GetToken());
+                Console.WriteLine(client.Execute(request).Content);
+                return;
+            });
+            Thread.Start();
+        }
+
+        public void SetColdBrightness(int brightness)
+        {
+            if (brightness < 0) brightness = 0;
+            if (brightness > 255) brightness = 255;
+            ColdBrightness = brightness;
+            Thread = new Thread(() =>
+            {
+                var client = new RestClient(url + "/api/" + realm + "/asset/" + Id + "/attribute/brightnessWhiteColdLed");
+                var request = new RestRequest();
+                request.Method = Method.Put;
+                request.AddBody(brightness);
+                request.AddHeader("authorization", "Bearer " + Token.GetToken());
+                Console.WriteLine(client.Execute(request).Content);
+                return;
+            });
+            Thread.Start();
         }
 
         public void FadeLight()
