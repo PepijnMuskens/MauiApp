@@ -3,54 +3,56 @@ using RestSharp;
 namespace Controller
 {
     // All the code in this file is included in all platforms.
-    public class Controller
+    public static class Controller
     {
-        string realm = "strijp";
-        string url = "https://staging.strijp.openremote.app";
+        static string realm = "strijp";
+        static string url = "https://staging.strijp.openremote.app";
 
-        string broeinestid = "3lGbluNj94x8A7b3NFieiy";
-        string O6021 = "3v4kD62VpTAHAmMFW536hQ";
-        string W6021 = "4ErkQXvRN0b1aFS1z5Mi8t";
-        string O6022 = "50WxcFY2bcWYuX9BCJaPdN";
-        string W6022 = "2zxSJTBK2HyCJRTVP25HER";
-        string O6023 = "5WSH1baydm37mEQaVfpRtt";
-        string W6023 = "5QOQbbZbIcMrneDToD7Wgu";
-        string N6024 = "7S324dnACVjlg2TO53C4zj";
-        string Z6024 = "3XXJACAqHZCkhgn8PWZKaQ";
-        string N6025 = "4k8ThtXzLEc50LHowdGYan";
-        string Z6025 = "777yWSXa64OdBpQLzWUv5R";
-        string O6026 = "6e5JpYJ0g17nwS9vLFzgfp";
-        string W6026 = "2mezxE1lOSngRyXubh0wOf";
-        string O6027 = "5kYW7teouE8TFqmWwdsMz0";
-        string W6027 = "5UMschrkm2g3hsmEXuYXbq";
-        string O6028 = "6F1eDFmy5CQW9NFiM7JDSJ";
-        string W6028 = "76oDMkuQEqM90lYy2eskyv";
+        static string broeinestid = "3lGbluNj94x8A7b3NFieiy";
+        static string O6021 = "3v4kD62VpTAHAmMFW536hQ";
+        static string W6021 = "4ErkQXvRN0b1aFS1z5Mi8t";
+        static string O6022 = "50WxcFY2bcWYuX9BCJaPdN";
+        static string W6022 = "2zxSJTBK2HyCJRTVP25HER";
+        static string O6023 = "5WSH1baydm37mEQaVfpRtt";
+        static string W6023 = "5QOQbbZbIcMrneDToD7Wgu";
+        static string N6024 = "7S324dnACVjlg2TO53C4zj";
+        static string Z6024 = "3XXJACAqHZCkhgn8PWZKaQ";
+        static string N6025 = "4k8ThtXzLEc50LHowdGYan";
+        static string Z6025 = "777yWSXa64OdBpQLzWUv5R";
+        static string O6026 = "6e5JpYJ0g17nwS9vLFzgfp";
+        static string W6026 = "2mezxE1lOSngRyXubh0wOf";
+        static string O6027 = "5kYW7teouE8TFqmWwdsMz0";
+        static string W6027 = "5UMschrkm2g3hsmEXuYXbq";
+        static string O6028 = "6F1eDFmy5CQW9NFiM7JDSJ";
+        static string W6028 = "76oDMkuQEqM90lYy2eskyv";
 
-        public string[] lights;
-        public List<Light> Lights { get; set; }
-        public Controller()
+        static public string[] lights;
+        public static List<Light> Lights { get; set; }
+
+        static Controller()
         {
             lights = new string[] { O6021, O6022, O6023, N6024, N6025, O6026, O6027, O6028 };
             Lights = new List<Light>();
+            Lights.Add(new Light("3lGbluNj94x8A7b3NFieiy", "Broeinest", 5.458841, 51.445833));
             Lights.Add(new Light("3v4kD62VpTAHAmMFW536hQ", "O6021", 5.458841, 51.445833));
             Lights.Add(new Light("4ErkQXvRN0b1aFS1z5Mi8t", "W6021", 5.458841, 51.445833));
-            Lights.Add(new Light("50WxcFY2bcWYuX9BCJaPdN", "O6022", 5.458841, 51.445833));
-            Lights.Add(new Light("2zxSJTBK2HyCJRTVP25HER", "W6022", 5.458841, 51.445833));
-            Lights.Add(new Light("5WSH1baydm37mEQaVfpRtt", "O6023", 5.458841, 51.445833));
-            Lights.Add(new Light("5QOQbbZbIcMrneDToD7Wgu", "W6023", 5.458841, 51.445833));
-            Lights.Add(new Light("7S324dnACVjlg2TO53C4zj", "N6024", 5.458841, 51.445833));
-            Lights.Add(new Light("3XXJACAqHZCkhgn8PWZKaQ", "Z6024", 5.458841, 51.445833));
-            Lights.Add(new Light("4k8ThtXzLEc50LHowdGYan", "N6025", 5.458841, 51.445833));
-            Lights.Add(new Light("777yWSXa64OdBpQLzWUv5R", "Z6025", 5.458841, 51.445833));
-            Lights.Add(new Light("6e5JpYJ0g17nwS9vLFzgfp", "O6026", 5.458841, 51.445833));
-            Lights.Add(new Light("2mezxE1lOSngRyXubh0wOf", "W6026", 5.458841, 51.445833));
-            Lights.Add(new Light("5kYW7teouE8TFqmWwdsMz0", "O6027", 5.458841, 51.445833));
-            Lights.Add(new Light("5UMschrkm2g3hsmEXuYXbq", "W6027", 5.458841, 51.445833));
-            Lights.Add(new Light("6F1eDFmy5CQW9NFiM7JDSJ", "O6028", 5.458841, 51.445833));
-            Lights.Add(new Light("76oDMkuQEqM90lYy2eskyv", "W6028", 5.458841, 51.445833));
+            Lights.Add(new Light("50WxcFY2bcWYuX9BCJaPdN", "O6022", 5.458721, 51.445688));
+            Lights.Add(new Light("2zxSJTBK2HyCJRTVP25HER", "W6022", 5.458721, 51.445688));
+            Lights.Add(new Light("5WSH1baydm37mEQaVfpRtt", "O6023", 5.458605, 51.445554));
+            Lights.Add(new Light("5QOQbbZbIcMrneDToD7Wgu", "W6023", 5.458605, 51.445554));
+            Lights.Add(new Light("7S324dnACVjlg2TO53C4zj", "N6024", 5.458402, 51.445559));
+            Lights.Add(new Light("3XXJACAqHZCkhgn8PWZKaQ", "Z6024", 5.458402, 51.445559));
+            Lights.Add(new Light("4k8ThtXzLEc50LHowdGYan", "N6025", 5.458082, 51.445639));
+            Lights.Add(new Light("777yWSXa64OdBpQLzWUv5R", "Z6025", 5.458082, 51.445639));
+            Lights.Add(new Light("6e5JpYJ0g17nwS9vLFzgfp", "O6026", 5.458034, 51.445771));
+            Lights.Add(new Light("2mezxE1lOSngRyXubh0wOf", "W6026", 5.458034, 51.445771));
+            Lights.Add(new Light("5kYW7teouE8TFqmWwdsMz0", "O6027", 5.458072, 51.4459));
+            Lights.Add(new Light("5UMschrkm2g3hsmEXuYXbq", "W6027", 5.458072, 51.4459));
+            Lights.Add(new Light("6F1eDFmy5CQW9NFiM7JDSJ", "O6028", 5.458201, 51.446062));
+            Lights.Add(new Light("76oDMkuQEqM90lYy2eskyv", "W6028", 5.458201, 51.446062));
         }
 
-        public void FadeAllLights(string[] lights, int[] color)
+        public static void FadeAllLights(string[] lights, int[] color)
         {
             while (true)
             {
@@ -63,7 +65,7 @@ namespace Controller
             }
         }
 
-        public string GetAsset(string assetid)
+        public static string GetAsset(string assetid)
         {
             var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid);
             var request = new RestRequest();
@@ -73,7 +75,7 @@ namespace Controller
             return response.Content.ToString();
         }
 
-        public async void ChangeColor(string assetid, int[] color)
+        public static async void ChangeColor(string assetid, int[] color)
         {
             var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid + "/attribute/colourRgbLed");
             var request = new RestRequest();
@@ -84,7 +86,7 @@ namespace Controller
             return;
         }
 
-        public void TurnOn(string assetid)
+        public static void TurnOn(string assetid)
         {
             var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid + "/attribute/onOff");
             var request = new RestRequest();
@@ -95,7 +97,7 @@ namespace Controller
             return;
         }
 
-        public void TurnOff(string assetid)
+        public static void TurnOff(string assetid)
         {
             var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid + "/attribute/onOff");
             var request = new RestRequest();
@@ -106,7 +108,7 @@ namespace Controller
             return;
         }
 
-        public void SetWarmBrightness(string assetid, int brightness)
+        public static void SetWarmBrightness(string assetid, int brightness)
         {
             var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid + "/attribute/brightnessWhiteWarmLed");
             var request = new RestRequest();
@@ -117,7 +119,7 @@ namespace Controller
             return;
         }
 
-        public void SetColdBrightness(string assetid, int brightness)
+        public static void SetColdBrightness(string assetid, int brightness)
         {
             var client = new RestClient(url + "/api/" + realm + "/asset/" + assetid + "/attribute/brightnessWhiteColdLed");
             var request = new RestRequest();
@@ -128,7 +130,7 @@ namespace Controller
             return;
         }
 
-        public async Task FadeLight(string assetid)
+        public static async Task FadeLight(string assetid)
         {
             int[] Color = new int[] { 255, 0, 0 };
             for (int i = 0; i < 3; i++)
@@ -152,7 +154,7 @@ namespace Controller
             return;
         }
 
-        int[] offset(int[] color, int offset)
+        static int[] offset(int[] color, int offset)
         {
             for (int i = 0; i < color.Length; i++)
             {
@@ -187,7 +189,7 @@ namespace Controller
             }
             return color;
         }
-        public void Reset()
+        public static void Reset()
         {
             TurnOff(broeinestid);
             ChangeColor(broeinestid, new int[] { 0, 0, 0 });

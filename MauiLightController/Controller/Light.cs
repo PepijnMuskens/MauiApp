@@ -87,6 +87,19 @@ namespace Controller
             return;
         }
 
+        public void Reset()
+        {
+            StopTasks();
+            var client = new RestClient(url + "/api/" + realm + "/asset/" + Id + "/attribute/onOff");
+            var request = new RestRequest();
+            request.Method = Method.Put;
+            request.AddBody(true);
+            request.AddHeader("authorization", "Bearer " + Token.GetToken());
+            Console.WriteLine(client.Execute(request).Content);
+            changeColor(new int[] { 0, 0, 0 });
+            return;
+        }
+
         public void SetWarmBrightness(int brightness)
         {
             if(brightness < 0) brightness = 0;
@@ -146,7 +159,6 @@ namespace Controller
             Stop = false;
             return;
         }
-
 
 
         int[] offset(int[] color, int offset)

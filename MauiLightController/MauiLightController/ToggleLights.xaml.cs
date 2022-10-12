@@ -3,11 +3,9 @@ namespace MauiLightController;
 using Controller;
 public partial class ToggleLights : ContentPage
 {
-    Controller Controller { get; set; }
     public ToggleLights()
     {
         InitializeComponent();
-        Controller = new Controller();
         CreateControl();
     }
     public class Light
@@ -83,6 +81,6 @@ public partial class ToggleLights : ContentPage
     }
     private async void FadeLightClicked(object sender, EventArgs e, string assetid)
     {
-        Controller.Lights.Find(L => L.Id == assetid).StopTasks();
+        Controller.Lights.Find(L => L.Id == assetid).Reset();
     }
 }
