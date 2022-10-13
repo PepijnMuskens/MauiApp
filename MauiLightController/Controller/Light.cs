@@ -139,27 +139,25 @@ namespace Controller
         public void FadeLight()
         {
             StopTasks();
-            Thread = new Thread(() => fadeLight());
+            Thread = new Thread(() =>
+            {
+                Working = true;
+                int[] Color = new int[] { 255, 0, 0 };
+                while (Working)
+                {
+                    changeColor(Color);
+                    Color = offset(Color, 50);
+                    Thread.Sleep(100);
+                    if (Stop)
+                    {
+                        Working = false;
+                    }
+                }
+                Stop = false;
+                return;
+            });
             Thread.Start();
         }
-        private async Task fadeLight()
-        {
-            Working = true;
-            int[] Color = new int[] { 255, 0, 0 };
-            while (Working)
-            {
-                changeColor(Color);
-                Color = offset(Color,10);
-                Thread.Sleep(10);
-                if (Stop)
-                {
-                    Working = false;
-                }
-            }
-            Stop = false;
-            return;
-        }
-
 
         int[] offset(int[] color, int offset)
         {

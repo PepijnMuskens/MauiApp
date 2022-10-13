@@ -8,10 +8,6 @@ public partial class ToggleLights : ContentPage
         InitializeComponent();
         CreateControl();
     }
-    public class Light
-    {
-        public string Id { get; set; }
-    }
     private void CreateControl()
     {
         DataTemplate dataTemplate = new DataTemplate(() =>
@@ -77,7 +73,12 @@ public partial class ToggleLights : ContentPage
     }
     private async void TurnLightOffClicked(object sender, EventArgs e, string assetid)
     {
-        Controller.Lights.Find(L => L.Id == assetid).FadeLight();
+        Light light = Controller.Lights.Find(L => L.Id == assetid);
+        if(light.Id != "3lGbluNj94x8A7b3NFieiy")
+        {
+            light.FadeLight();
+        }
+        
     }
     private async void FadeLightClicked(object sender, EventArgs e, string assetid)
     {

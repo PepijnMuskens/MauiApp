@@ -6,6 +6,7 @@ using System.Diagnostics;
 public partial class Rotate : ContentPage
 {
     Stopwatch stopwatch;
+    Stopwatch LocationTimer;
     public bool Active = false;
     private CancellationTokenSource _cancelTokenSource;
     private bool _isCheckingLocation;
@@ -16,6 +17,7 @@ public partial class Rotate : ContentPage
     {
         GetCurrentLocation();
         stopwatch = Stopwatch.StartNew();
+        LocationTimer = Stopwatch.StartNew();
         int i = 90;
         foreach(string light in Controller.lights)
         {
@@ -42,7 +44,7 @@ public partial class Rotate : ContentPage
     private async void Compass_ReadingChanged(object sender, CompassChangedEventArgs e)
     {
         // Update UI Label with compass state
-        if (stopwatch.ElapsedMilliseconds > 1000 && Active)
+        if (stopwatch.ElapsedMilliseconds > 500 && Active)
         {
 
             int rotation = (int)e.Reading.HeadingMagneticNorth;
@@ -68,9 +70,10 @@ public partial class Rotate : ContentPage
                 }
             }else if(mode == "rotate")
             {
-                if (!_isCheckingLocation)
+                if (!_isCheckingLocation && LocationTimer.ElapsedMilliseconds > 10000)
                 {
-                    GetCurrentLocation();
+                    Thread thread = new Thread(() => GetCurrentLocation()); 
+                    thread.Start();
                 }
                 if (lon != 0 && lat != 0)
                 {
@@ -86,7 +89,7 @@ public partial class Rotate : ContentPage
                             Controller.ChangeColor(light.Id, new int[] { 30, 0, 0 });
                         }
                     }
-                    CompassLabel.Text = CalculateAngle(lon, lat, 5.4672482228004915, 51.43932521261245).ToString() + "\n" + lon + "  "+lat ;
+                    CompassLabel.Text = "Angle To center: " +CalculateAngle(lon, lat, 5.458431811075331, 51.44583726090631).ToString() + "\n" + "Angle: " + rotation + "\n" + lon + "  "+lat ;
                 }
             }
             stopwatch.Restart();
