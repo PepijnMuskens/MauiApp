@@ -14,6 +14,7 @@ namespace Controller
         public string Name { get; private set; }
         public double Longitude { get; private set; }
         public double Latitude { get; private set; }
+        public int Angle { get; private set; }
 
         public int[] Color { get; private set; }
         public int WarmBrightness { get; private set; }
@@ -43,6 +44,26 @@ namespace Controller
             Working = false;
             Stop = false;
         }
+
+        public int CalculateAngle(double lon, double lat)
+        {
+            double angle = -400;
+            double aanliggend = lat - Latitude;
+            double overstaand = lon - Longitude;
+            angle = Math.Atan(overstaand / aanliggend) * 180 / Math.PI;
+            if (Latitude <= lat)
+            {
+                if (angle < 0) angle += 360;
+            }
+            else
+            {
+                angle += 180;
+            }
+
+            Angle = (int)angle;
+            return Angle;
+        }
+
         public void StopTasks()
         {
             if (Working)

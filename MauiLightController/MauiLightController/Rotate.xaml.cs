@@ -10,8 +10,8 @@ public partial class Rotate : ContentPage
     public bool Active = false;
     private CancellationTokenSource _cancelTokenSource;
     private bool _isCheckingLocation;
-    private double lon = 0;
-    private double lat = 0;
+    private double lon = (Controller.Lights[3].Longitude + Controller.Lights[12].Longitude) /2;
+    private double lat = (Controller.Lights[3].Latitude + Controller.Lights[12].Latitude) / 2;
     Dictionary<string, int> Lightpositions = new Dictionary<string, int>();
     public Rotate()
     {
@@ -31,7 +31,7 @@ public partial class Rotate : ContentPage
             {
                 // Turn on compass
                 Compass.Default.ReadingChanged += Compass_ReadingChanged;
-                Compass.Default.Start(SensorSpeed.UI);
+                Compass.Default.Start(SensorSpeed.Fastest);
             }
             else
             {
@@ -72,8 +72,8 @@ public partial class Rotate : ContentPage
             {
                 if (!_isCheckingLocation && LocationTimer.ElapsedMilliseconds > 10000)
                 {
-                    Thread thread = new Thread(() => GetCurrentLocation()); 
-                    thread.Start();
+                    //Thread thread = new Thread(() => GetCurrentLocation()); 
+                    //thread.Start();
                 }
                 if (lon != 0 && lat != 0)
                 {
@@ -86,7 +86,7 @@ public partial class Rotate : ContentPage
                         }
                         else
                         {
-                            Controller.ChangeColor(light.Id, new int[] { 30, 0, 0 });
+                            Controller.ChangeColor(light.Id, new int[] { 0, 0, 0 });
                         }
                     }
                     CompassLabel.Text = "Angle To center: " +CalculateAngle(lon, lat, 5.458431811075331, 51.44583726090631).ToString() + "\n" + "Angle: " + rotation + "\n" + lon + "  "+lat ;
